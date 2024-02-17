@@ -107,68 +107,72 @@ public class Main
         int d100Roll = new Random().nextInt(100);
         if (counters[3] == 0 && counters[4] == 0)
             d100Roll = 90; // forced random at the beginning
-        else
+
+        if (d100Roll < 24) // most user plays
         {
-            if (d100Roll < 24) // most user plays
+            if (counters[0] >= counters[1] || counters[0] > counters[2])
             {
-                if (counters[0] >= counters[1] || counters[0] > counters[2])
-                {
-                    // rock >= paper OR rock > scissors
-                    computerMove[0] = "Paper";
-                }
-                else if (counters[1] >= counters[2] || counters[1] > counters[0])
-                {
-                    // paper >= scissors OR paper > rock
-                    computerMove[0] = "Scissors";
-                }
-                else if (counters[2] >= counters[0] || counters[2] > counters[1])
-                {
-                    // scissors >= rock OR scissors > paper
-                    computerMove[0] = "Rock";
-                }
+                // rock >= paper OR rock > scissors
+                computerMove[0] = "Paper";
             }
-            else if (d100Roll < 48) // least user plays
+            else if (counters[1] >= counters[2] || counters[1] > counters[0])
             {
-                if (counters[0] <= counters[1] || counters[0] < counters[2])
-                {
-                    // rock <= paper OR rock < scissors
-                    computerMove[0] = "Scissors";
-                }
-                else if (counters[1] <= counters[2] || counters[1] < counters[0])
-                {
-                    // paper <= scissors OR paper < rock
-                    computerMove[0] = "Rock";
-                }
-                else if (counters[2] <= counters[0] || counters[2] < counters[1])
-                {
-                    // scissors >= rock OR scissors > paper
-                    computerMove[0] = "Paper";
-                }
+                // paper >= scissors OR paper > rock
+                computerMove[0] = "Scissors";
             }
-            else if (d100Roll < 72) // based off the previous player move
+            else if (counters[2] >= counters[0] || counters[2] > counters[1])
             {
-                computerMove[0] = previousPlayerMove[0];
-            }
-            else if (d100Roll < 92) // random
-            {
-                int rand = new Random().nextInt(3);
-                if (rand == 0)
-                    computerMove[0] = "Rock";
-                else if (rand == 1)
-                    computerMove[0] = "Paper";
-                else
-                    computerMove[0] = "Scissors";
-            }
-            else // cheater
-            {
-                if (playerMove[0].equals("Rock"))
-                    computerMove[0] = "Paper";
-                else if (playerMove[0].equals("Paper"))
-                    computerMove[0] = "Scissors";
-                else
-                    computerMove[0] = "Rock";
+                // scissors >= rock OR scissors > paper
+                computerMove[0] = "Rock";
             }
         }
+        else if (d100Roll < 48) // least user plays
+        {
+            if (counters[0] <= counters[1] || counters[0] < counters[2])
+            {
+                // rock <= paper OR rock < scissors
+                computerMove[0] = "Scissors";
+            }
+            else if (counters[1] <= counters[2] || counters[1] < counters[0])
+            {
+                // paper <= scissors OR paper < rock
+                computerMove[0] = "Rock";
+            }
+            else if (counters[2] <= counters[0] || counters[2] < counters[1])
+            {
+                // scissors >= rock OR scissors > paper
+                computerMove[0] = "Paper";
+            }
+        }
+        else if (d100Roll < 72) // based off the previous player move
+        {
+            computerMove[0] = previousPlayerMove[0];
+        }
+        else if (d100Roll < 92) // random
+        {
+            int rand = new Random().nextInt(3);
+            if (rand == 0)
+                computerMove[0] = "Rock";
+            else if (rand == 1)
+                computerMove[0] = "Paper";
+            else
+                computerMove[0] = "Scissors";
+            System.out.println("Random Random Num: " + rand);
+        }
+        else if (d100Roll < 100) // cheater
+        {
+            if (playerMove[0].equals("Rock"))
+                computerMove[0] = "Paper";
+            else if (playerMove[0].equals("Paper"))
+                computerMove[0] = "Scissors";
+            else
+                computerMove[0] = "Rock";
+        }
+        else
+            System.out.println("ERROR: Random d100 Roll out of Computer Strategy Chance");
+
+        System.out.println("Computer Move: " + computerMove[0]);
+        System.out.println("Random Num: " + d100Roll);
 
         // CHECK WINNER
         if (computerMove[0].equals(playerMove[0]))
